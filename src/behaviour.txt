@@ -1,0 +1,17 @@
+This controller uses a state machine with 5 different states:
+- “eatPills”: This is the main / regular state. Move in the direction of the closest regular pill. 
+- “wait”: This state gets executed when Pacman is very close to a power pill. Pacman remembers the lastMove made and moves in the opposite direction of that move, creating a game-stall where pacman does not move at all. As soon as a ghost is close to Pacman, he switches state to eatPowerPill.
+- “eatPowerPill”: Pacman moves in the direction of the closest power pill based on the direction of the closest ghost and the power pill. As soon as the power pill has been eaten, Pacman changes state to eatGhosts.
+- “eatGhosts”: Pacman is in this state as long as any ghost is edible (a power pill has been eaten and there exist edible ghosts in the game). Pacman moves in the direction of the closest edible ghost, chasing them and eating them.
+- “escapeFromGhost”: This state is accessible from all other states, and Pacman switches to this state any time there is a non-edible ghost very close. Pacman then moves away from the ghost that is chasing him. Pacman stays in this state until the ghost is gone, or until he is close to a power pill again, where it switched to the wait state and eventually the eat power pill state.
+
+Summary of the strategy:
+Since eating ghosts gives more points than eating regular pills, I decided to prioritize on eating ghosts and maximize those points. Therefore I am waiting for ghosts to be nearby before I eat the power pill so that I can instantly turn around and eat the ghost and score some points. This way I also have more time to find the other ghosts (these ghosts will also be closer to pacman) and hopefully am able to eat them too. I am basically luring ghosts close to me, eating the power pill and then eating the ghosts (and repeat…).
+
+Average score expected:
+I got an average score of 2602 over 40 games when I tested this myself.
+
+Notes:
+- I calculate and print the average score in the command line after all the games have run (feel free to check my main method). Hopefully this makes it easier for the marker. :)
+
+
